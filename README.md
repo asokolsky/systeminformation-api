@@ -8,11 +8,17 @@ This is a simple node.js/express app to access APIs exposed by an awesome [syste
 You have to have [node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) setup.
 
 # How to Use it
+## Build
 Run in the shell in the current directory
-npm install
-and then 
-node index.js
-and then in your browser
+
+
+```npm install```
+## Run
+and then in the shell
+
+```node index.js```
+
+Finally, point your browser
 http://localhost:3000/api/systeminformation/cpu
 
 For a full list of verbs supported see the [systeminformation documentation](https://www.npmjs.com/package/systeminformation).

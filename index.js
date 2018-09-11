@@ -3,8 +3,7 @@
 const express = require('express');
 const app = express();
 const si = require('systeminformation');
-
-const port = 3000;
+const minimist = require('minimist');
  
 /**
  * General
@@ -370,10 +369,27 @@ app.get('/api/systeminformation/dockerAll', (req, res) => {
     });
 });
 
+/**
+ *  Parse the command line
+ */
+const args = minimist(process.argv.slice(2), {
+    alias: {
+        h: 'help',
+        v: 'version',
+        p: 'port'
+    },
+    default: {
+        port: 3000
+    }
+});
+//console.log(`Args: ${args}`);
+//console.log(args);
+const port = args.port;
+//console.log(`Port: ${port}`);
 
 /**
- * 
+ * Start the server!
  */
 app.listen(port, () => console.log(`Listening on port ${port}...`));
 
-//console.log("Done!");
+console.log("Done!");

@@ -7,6 +7,20 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
-    "systeminformation": "^3.45.5"
-  }
+    "systeminformation": "^3.45.5",
+    "minimist": "^1.2.0"
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asokolsky/systeminformation-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/asokolsky/systeminformation-api/issues"
+  },
+  "homepage": "https://github.com/asokolsky/systeminformation-api#readme"
 }
