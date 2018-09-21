@@ -8,7 +8,6 @@ const minimist = require('minimist');
 /**
  * General
  */
-
 app.get('/api/systeminformation', (req, res) => {
     //console.log(si.version());
     res.send(si.version());
@@ -105,7 +104,7 @@ app.get('/api/systeminformation/cpuCurrentspeed/:id', (req, res) => {
 app.get('/api/systeminformation/cpuTemperature', (req, res) => {
     si.cpuTemperature((data) => {
         //console.log('CPU temperature:');
-        console.log(data);
+        //console.log(data);
         res.send(data);
     });
 });
@@ -151,8 +150,8 @@ app.get('/api/systeminformation/mem/:key', (req, res) => {
 
 app.get('/api/systeminformation/memLayout', (req, res) => {
     si.memLayout((data) => {
-        console.log('memLayout:');
-        console.log(data);
+        //console.log('memLayout:');
+        //console.log(data);
         res.send(data);
     });
 });
@@ -370,6 +369,15 @@ app.get('/api/systeminformation/dockerAll', (req, res) => {
 });
 
 /**
+ * "Get All at once"
+ */
+app.get('/api/systeminformation/getStaticData', (req, res) => {
+    si.getStaticData((data) => {
+        res.send(data);
+    });
+});
+
+/**
  *  Parse the command line
  */
 const args = minimist(process.argv.slice(2), {
@@ -390,6 +398,6 @@ const port = args.port;
 /**
  * Start the server!
  */
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+app.listen(port, () => console.log('Ready'));
 
-console.log("Done!");
+console.log(`Preparing http://localhost:${port}/api/systeminformation`);
