@@ -41,5 +41,6 @@ It's time!
 
 ## Package it as a Docker Image
 
-duh
+https://nodesource.com/blog/8-protips-to-start-killing-it-when-dockerizing-node-js
+
 
