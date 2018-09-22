@@ -27,3 +27,11 @@ For a full list of verbs supported see the [systeminformation documentation](htt
 # Credits
 [systeminformation](https://www.npmjs.com/package/systeminformation)
  by [Sebastian Hildebrandt](https://github.com/sebhildebrandt)
+
+# TODO
+
+Package this as an (os=specific) service:
+
+https://github.com/coreybutler/node-windows
+https://github.com/tallesl/qckwinsvc
+
