@@ -1,18 +1,16 @@
 # System Information API
-
-This is a simple node.js/express app to access APIs exposed by an awesome [systeminformation](https://www.npmjs.com/package/systeminformation).
-
-
+This is a thin wrapper around [systeminformation](https://www.npmjs.com/package/systeminformation) to expose it as a REST API.  Relies on 
+node.js/express and minimist.
 
 # Dependenciies
-You have to have [node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) setup.
+You have to have [node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) setup. Uses express and minimist which are automatiaclly installed by npm - see below.
 
 # How to Use it
 ## Build
 Run in the shell in the current directory
 
-
 ```npm install```
+
 ## Run
 and then in the shell
 
@@ -31,16 +29,12 @@ For a full list of verbs supported see the [systeminformation documentation](htt
 # TODO
 
 ## Package it as a Service
-
 https://github.com/coreybutler/node-windows
+
 https://github.com/tallesl/qckwinsvc
 
 ## Publish it in npm
-
 It's time!
 
 ## Package it as a Docker Image
-
 https://nodesource.com/blog/8-protips-to-start-killing-it-when-dockerizing-node-js
-
-
