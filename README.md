@@ -30,8 +30,16 @@ For a full list of verbs supported see the [systeminformation documentation](htt
 
 # TODO
 
-Package this as an (os=specific) service:
+## Package it as a Service
 
 https://github.com/coreybutler/node-windows
 https://github.com/tallesl/qckwinsvc
+
+## Publish it in npm
+
+It's time!
+
+## Package it as a Docker Image
+
+duh
 
