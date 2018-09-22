@@ -77,7 +77,7 @@ app.get('/api/systeminformation/cpuCache', (req, res) => {
 app.get('/api/systeminformation/cpuCurrentspeed', (req, res) => {
     si.cpuCurrentspeed((data) => {
         //console.log('CPU Current Speed:');
-        console.log(data);
+        //console.log(data);
         res.send(data);
     });
 });
@@ -118,7 +118,7 @@ app.get('/api/systeminformation/cpuTemperature/:id', (req, res) => {
             //console.log(data.cores[cpuID]);
             res.send(data.cores[cpuID].toString());
         } catch (error) {
-            console.log(`Bad cpuID ${cpuID}`);
+            //console.log(`Bad cpuID ${cpuID}`);
             //res.statusMessage = `CPU ${cpuID} not found.`;
             //res.sendStatus(404);
             res.status(404).send(`Core ${cpuID} not found`);
@@ -190,7 +190,7 @@ app.get('/api/systeminformation/graphics/controllers/:id', (req, res) => {
             //console.log(`js:${js}`);
             res.send(js);
         } else {
-            console.log(`Bad controllerID ${id}`);
+            //console.log(`Bad controllerID ${id}`);
             //res.statusMessage = `CPU ${cpuID} not found.`;
             //res.sendStatus(404);
             res.status(404).send(`Controller ${id} not found`);
@@ -208,7 +208,7 @@ app.get('/api/systeminformation/graphics/displays/:id', (req, res) => {
             //console.log(`js:${js}`);
             res.send(js);
         } else {
-            console.log(`Bad displayID ${id}`);
+            //console.log(`Bad displayID ${id}`);
             //res.statusMessage = `CPU ${cpuID} not found.`;
             //res.sendStatus(404);
             res.status(404).send(`Display ${id} not found`);
