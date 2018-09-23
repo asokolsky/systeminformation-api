@@ -1,13 +1,23 @@
 # System Information API
-This is a thin wrapper around [systeminformation](https://www.npmjs.com/package/systeminformation) to expose it as a REST API.  Relies on 
-node.js/express and minimist.
+This is a thin wrapper around [systeminformation](https://www.npmjs.com/package/systeminformation) to expose it as a REST API.
 
-# Dependenciies
-You have to have [node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) setup. Uses express and minimist which are automatiaclly installed by npm - see below.
+# Dependencies
+You have to have [node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) setup. Uses express to create minimal web service and minimist to process command line argument.  Both are automatically installed by npm - see below.
 
 # How to Use it
+
+## Download
+
+Clone or download it from git hub:
+
+```git clone https://github.com/asokolsky/systeminformation-api.git```
+
+or just use npm to download and install it:
+
+```npm i systeminformation-api```
+
 ## Build
-Run in the shell in the current directory
+Run in the shell in the directory where you cloned systeminformation-api:
 
 ```npm install```
 
