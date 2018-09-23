@@ -33,8 +33,9 @@ https://github.com/coreybutler/node-windows
 
 https://github.com/tallesl/qckwinsvc
 
-## Publish it in npm
-It's time!
-
 ## Package it as a Docker Image
 https://nodesource.com/blog/8-protips-to-start-killing-it-when-dockerizing-node-js
+
+# DONE
+## Publish it in npm
+DONE: https://www.npmjs.com/package/systeminformation-api

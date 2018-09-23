@@ -4,7 +4,36 @@ const express = require('express');
 const app = express();
 const si = require('systeminformation');
 const minimist = require('minimist');
- 
+const pjson = require('./package.json');
+
+/**
+ *  Parse the command line
+ */
+const args = minimist(process.argv.slice(2), {
+    alias: {
+        h: 'help',
+        v: 'version',
+        p: 'port'
+    },
+    default: {
+        port: 3000
+    }
+});
+//console.log(`Args: ${args}`);
+//console.log(args);
+const port = args.port;
+//console.log(`Port: ${port}`);
+
+if(args.help) {
+    console.log('Command line spec: [{-p|--port}:<portnumber>] [-h|--help] [-v|--version] ');
+    process.exit(0);
+} else if(args.version) {
+    console.log(pjson.name);
+    console.log(pjson.description);
+    console.log(pjson.version);
+    process.exit(0);
+}
+
 /**
  * General
  */
@@ -376,24 +405,11 @@ app.get('/api/systeminformation/getStaticData', (req, res) => {
         res.send(data);
     });
 });
-
-/**
- *  Parse the command line
- */
-const args = minimist(process.argv.slice(2), {
-    alias: {
-        h: 'help',
-        v: 'version',
-        p: 'port'
-    },
-    default: {
-        port: 3000
-    }
+app.get('/api/systeminformation/getDynamicData', (req, res) => {
+    si.getDynamicData((data) => {
+        res.send(data);
+    });
 });
-//console.log(`Args: ${args}`);
-//console.log(args);
-const port = args.port;
-//console.log(`Port: ${port}`);
 
 /**
  * Start the server!
