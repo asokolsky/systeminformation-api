@@ -1,7 +1,7 @@
 {
   "name": "systeminformation-api",
   "description": "Expose systeminformation as REST APIs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "index.js",
   "author": "Alex Sokolsky <asokolsky@gmail.com>",
   "license": "ISC",
