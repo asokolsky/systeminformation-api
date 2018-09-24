@@ -2,7 +2,9 @@
 This is a thin wrapper around [systeminformation](https://www.npmjs.com/package/systeminformation) to expose it as a REST API.
 
 # Dependencies
-You have to have [node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) setup. Uses express to create minimal web service and minimist to process command line argument.  Both are automatically installed by npm - see below.
+You have to have [node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) setup. Uses [express](http://expressjs.com) to create minimal web service and [minimist](https://github.com/substack/minimist) to process command line argument.  For testing I rely on [mocha](https://mochajs.org)/[chai](https://www.chaijs.com)/[chai-http](https://github.com/chaijs/chai-http).
+All the dependencies are automatically installed by npm - see below.
+
 
 # How to Use it
 
