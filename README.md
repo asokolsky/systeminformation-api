@@ -29,7 +29,46 @@ and then in the shell
 Finally, point your browser
 http://localhost:3000/api/systeminformation/cpu
 
-For a full list of verbs supported see the [systeminformation documentation](https://www.npmjs.com/package/systeminformation).
+## REST APIs Supported
+
+Only GET method is supported.   The URIs start with ```/api/systeminformation``` followed by:
+
+- empty string - returns systeminformation package version
+- time - returns time JSON
+- system
+- bios
+- baseboard
+- cpu
+- cpuFlags
+- cpuCache
+- cpuCurrentSpeed
+- cpuTemperature
+- mem
+- memLayout
+- diskLayout
+- battery
+- graphics
+- osInfo
+- versions
+- shell
+- users
+- fsSize
+- blockDevices
+- fsStats
+- disksIO
+- networkInterfaces
+- networkInterfaceDefault
+- networkStats
+- networkConnections
+- currentLoad
+- fullLoad
+- processes
+- dockerContainers
+- dockerAll
+- getStaticData
+- getDynamicData
+
+For a full description of the underlying functionality see the [systeminformation documentation](https://www.npmjs.com/package/systeminformation).
 
 
 # Credits
