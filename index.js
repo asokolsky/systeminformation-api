@@ -5,6 +5,7 @@ const app = express();
 const si = require('systeminformation');
 const minimist = require('minimist');
 const pjson = require('./package.json');
+const baseUri = '/api/systeminformation';
 
 /**
  *  Parse the command line
@@ -19,10 +20,7 @@ const args = minimist(process.argv.slice(2), {
         port: 3000
     }
 });
-//console.log(`Args: ${args}`);
-//console.log(args);
 const port = args.port;
-//console.log(`Port: ${port}`);
 
 if(args.help) {
     console.log('Command line spec: [{-p|--port}:<portnumber>] [-h|--help] [-v|--version] ');
@@ -30,39 +28,37 @@ if(args.help) {
 } else if(args.version) {
     console.log(pjson.name);
     console.log(pjson.description);
-    console.log(pjson.version);
+    console.log('Version', pjson.version);
     process.exit(0);
 }
 
 /**
  * General
  */
-app.get('/api/systeminformation', (req, res) => {
-    //console.log(si.version());
+app.get(baseUri, (req, res) => {
     res.send(si.version());
 });
 
-app.get('/api/systeminformation/time', (req, res) => {
-    //console.log(si.version());
+app.get(baseUri + '/time', (req, res) => {
     res.send(si.time());
 });
 
 /**
  * System (HW)
  */
-app.get('/api/systeminformation/system', (req, res) => {
+app.get(baseUri + '/system', (req, res) => {
     si.system((data) => {
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/bios', (req, res) => {
+app.get(baseUri + '/bios', (req, res) => {
     si.bios((data) => {
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/baseboard', (req, res) => {
+app.get(baseUri + '/baseboard', (req, res) => {
     si.baseboard((data) => {
         res.send(data);
     });
@@ -71,18 +67,16 @@ app.get('/api/systeminformation/baseboard', (req, res) => {
 /**
  * CPU, Memory, Disk, Battery, Graphics
  */
-app.get('/api/systeminformation/cpu', (req, res) => {
+app.get(baseUri + '/cpu', (req, res) => {
     si.cpu((data) => {
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/cpu/:key', (req, res) => {
+app.get(baseUri + '/cpu/:key', (req, res) => {
     si.cpu((data) => {
         const strKey = req.params.key;
-        //console.log(`strKey:${strKey}`);
         const val = data[strKey];
-        //console.log(`val:${val}`);
         if((typeof val !== 'undefined') && (val !== null)) {
             res.send(val.toString());
         } else {
@@ -91,84 +85,62 @@ app.get('/api/systeminformation/cpu/:key', (req, res) => {
     });
 });
 
-app.get('/api/systeminformation/cpuFlags', (req, res) => {
+app.get(baseUri + '/cpuFlags', (req, res) => {
     si.cpuFlags((data) => {
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/cpuCache', (req, res) => {
+app.get(baseUri + '/cpuCache', (req, res) => {
     si.cpuCache((data) => {
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/cpuCurrentspeed', (req, res) => {
+app.get(baseUri + '/cpuCurrentspeed', (req, res) => {
     si.cpuCurrentspeed((data) => {
-        //console.log('CPU Current Speed:');
-        //console.log(data);
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/cpuCurrentspeed/:id', (req, res) => {
+app.get(baseUri + '/cpuCurrentspeed/:id', (req, res) => {
     si.cpuCurrentspeed((data) => {
-        //console.log('CPU Current Speed:');
-        //console.log(data);
         const cpuID = req.params.id;
         try {
-            const speed = data.cores[cpuID];  
-            //console.log(cpuID);
-            //console.log(data.cores[cpuID]);
             res.send(data.cores[cpuID].toString());
         } catch (error) {
-            console.log(`Bad cpuID ${cpuID}`);
-            //res.statusMessage = `CPU ${cpuID} not found.`;
-            //res.sendStatus(404);
             res.status(404).send(`Core ${cpuID} not found`);
         }
     });
 });
 
-app.get('/api/systeminformation/cpuTemperature', (req, res) => {
+app.get(baseUri + '/cpuTemperature', (req, res) => {
     si.cpuTemperature((data) => {
-        //console.log('CPU temperature:');
-        //console.log(data);
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/cpuTemperature/:id', (req, res) => {
+app.get(baseUri + '/cpuTemperature/:id', (req, res) => {
     si.cpuTemperature((data) => {
         const cpuID = req.params.id;
         try {
-            const speed = data.cores[cpuID];  
-            //console.log(cpuID);
-            //console.log(data.cores[cpuID]);
             res.send(data.cores[cpuID].toString());
         } catch (error) {
-            //console.log(`Bad cpuID ${cpuID}`);
-            //res.statusMessage = `CPU ${cpuID} not found.`;
-            //res.sendStatus(404);
             res.status(404).send(`Core ${cpuID} not found`);
         }
     });
 });
 
-app.get('/api/systeminformation/mem', (req, res) => {
+app.get(baseUri + '/mem', (req, res) => {
     si.mem((data) => {
-        //console.log('Memory:');
-        //console.log(data);
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/mem/:key', (req, res) => {
+app.get(baseUri + '/mem/:key', (req, res) => {
     si.mem((data) => {
         const strKey = req.params.key;
-        //console.log(`strKey:${strKey}`);
         const val = data[strKey];
-        //console.log(`val:${val}`);
         if((typeof val !== 'undefined') && (val !== null)) {
             res.send(val.toString());
         } else {
@@ -177,69 +149,49 @@ app.get('/api/systeminformation/mem/:key', (req, res) => {
     });
 });
 
-app.get('/api/systeminformation/memLayout', (req, res) => {
+app.get(baseUri + '/memLayout', (req, res) => {
     si.memLayout((data) => {
-        //console.log('memLayout:');
-        //console.log(data);
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/diskLayout', (req, res) => {
+app.get(baseUri + '/diskLayout', (req, res) => {
     si.diskLayout((data) => {
-        //console.log('diskLayout:');
-        //console.log(data);
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/battery', (req, res) => {
+app.get(baseUri + '/battery', (req, res) => {
     si.battery((data) => {
-        //console.log('battery:');
-        //console.log(data);
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/graphics', (req, res) => {
+app.get(baseUri + '/graphics', (req, res) => {
     si.graphics((data) => {
-        //console.log('graphics:');
-        //console.log(data);
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/graphics/controllers/:id', (req, res) => {
+app.get(baseUri + '/graphics/controllers/:id', (req, res) => {
     si.graphics((data) => {
         const id = req.params.id;
         const js = data.controllers[id];
         if((typeof js !== 'undefined') && (js !== null)) {
-            //console.log(cpuID);
-            //console.log(data.cores[cpuID]);
-            //console.log(`js:${js}`);
             res.send(js);
         } else {
-            //console.log(`Bad controllerID ${id}`);
-            //res.statusMessage = `CPU ${cpuID} not found.`;
-            //res.sendStatus(404);
-            res.status(404).send(`Controller ${id} not found`);
+            res.status(404).send(`Graphics controller ${id} not found`);
         }
     });
 });
 
-app.get('/api/systeminformation/graphics/displays/:id', (req, res) => {
+app.get(baseUri + '/graphics/displays/:id', (req, res) => {
     si.graphics((data) => {
         const id = req.params.id;
         const js = data.displays[id];
         if((typeof js !== 'undefined') && (js !== null)) {
-            //console.log(cpuID);
-            //console.log(data.cores[cpuID]);
-            //console.log(`js:${js}`);
             res.send(js);
         } else {
-            //console.log(`Bad displayID ${id}`);
-            //res.statusMessage = `CPU ${cpuID} not found.`;
-            //res.sendStatus(404);
             res.status(404).send(`Display ${id} not found`);
         }
     });
@@ -248,17 +200,15 @@ app.get('/api/systeminformation/graphics/displays/:id', (req, res) => {
 /**
  * OS
  */
-app.get('/api/systeminformation/osInfo', (req, res) => {
+app.get(baseUri + '/osInfo', (req, res) => {
     si.osInfo((data) => {
         res.send(data);
     });
 });
-app.get('/api/systeminformation/osInfo/:key', (req, res) => {
+app.get(baseUri + '/osInfo/:key', (req, res) => {
     si.osInfo((data) => {
         const strKey = req.params.key;
-        //console.log(`strKey:${strKey}`);
         const val = data[strKey];
-        //console.log(`val:${val}`);
         if((typeof val !== 'undefined') && (val !== null)) {
             res.send(val.toString());
         } else {
@@ -267,17 +217,15 @@ app.get('/api/systeminformation/osInfo/:key', (req, res) => {
     });
 });
 
-app.get('/api/systeminformation/versions', (req, res) => {
+app.get(baseUri + '/versions', (req, res) => {
     si.versions((data) => {
         res.send(data);
     });
 });
-app.get('/api/systeminformation/versions/:key', (req, res) => {
+app.get(baseUri + '/versions/:key', (req, res) => {
     si.versions((data) => {
         const strKey = req.params.key;
-        //console.log(`strKey:${strKey}`);
         const val = data[strKey];
-        //console.log(`val:${val}`);
         if((typeof val !== 'undefined') && (val !== null)) {
             res.send(val.toString());
         } else {
@@ -286,12 +234,12 @@ app.get('/api/systeminformation/versions/:key', (req, res) => {
     });
 });
 
-app.get('/api/systeminformation/shell', (req, res) => {
+app.get(baseUri + '/shell', (req, res) => {
     si.shell((data) => {
         res.send(data);
     });
 });
-app.get('/api/systeminformation/users', (req, res) => {
+app.get(baseUri + '/users', (req, res) => {
     si.users((data) => {
         res.send(data);
     });
@@ -299,25 +247,25 @@ app.get('/api/systeminformation/users', (req, res) => {
 /**
  * File System
  */
-app.get('/api/systeminformation/fsSize', (req, res) => {
+app.get(baseUri + '/fsSize', (req, res) => {
     si.fsSize((data) => {
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/blockDevices', (req, res) => {
+app.get(baseUri + '/blockDevices', (req, res) => {
     si.blockDevices((data) => {
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/fsStats', (req, res) => {
+app.get(baseUri + '/fsStats', (req, res) => {
     si.fsStats((data) => {
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/disksIO', (req, res) => {
+app.get(baseUri + '/disksIO', (req, res) => {
     si.disksIO((data) => {
         res.send(data);
     });
@@ -325,25 +273,25 @@ app.get('/api/systeminformation/disksIO', (req, res) => {
 /**
  * Network functions
  */
-app.get('/api/systeminformation/networkInterfaces', (req, res) => {
+app.get(baseUri + '/networkInterfaces', (req, res) => {
     si.networkInterfaces((data) => {
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/networkInterfaceDefault', (req, res) => {
+app.get(baseUri + '/networkInterfaceDefault', (req, res) => {
     si.networkInterfaceDefault((data) => {
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/networkStats', (req, res) => {
+app.get(baseUri + '/networkStats', (req, res) => {
     si.networkStats((data) => {
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/networkConnections', (req, res) => {
+app.get(baseUri + '/networkConnections', (req, res) => {
     si.networkConnections((data) => {
         res.send(data);
     });
@@ -351,33 +299,29 @@ app.get('/api/systeminformation/networkConnections', (req, res) => {
 /**
  * Load processes and services
  */
-app.get('/api/systeminformation/currentLoad', (req, res) => {
+app.get(baseUri + '/currentLoad', (req, res) => {
     si.currentLoad((data) => {
         res.send(data);
     });
 });
 
-app.get('/api/systeminformation/currentLoad/:id', (req, res) => {
+app.get(baseUri + '/currentLoad/:id', (req, res) => {
     si.currentLoad((data) => {
         const cpuID = req.params.id;
         const js = data.cpus[cpuID];
         if((typeof js !== 'undefined') && (js !== null)) {
-            //console.log(cpuID);
-            //console.log(data.cpus[cpuID]);
-            //console.log(`js:${js}`);
             res.send(js);
         } else {
-            //console.log(`Bad cpuID ${cpuID}`);
             res.status(404).send(`CPU ${cpuID} not found`);
         }
     });
 });
-app.get('/api/systeminformation/fullLoad', (req, res) => {
+app.get(baseUri + '/fullLoad', (req, res) => {
     si.fullLoad((data) => {
         res.send(data);
     });
 });
-app.get('/api/systeminformation/processes', (req, res) => {
+app.get(baseUri + '/processes', (req, res) => {
     si.processes((data) => {
         res.send(data);
     });
@@ -386,12 +330,12 @@ app.get('/api/systeminformation/processes', (req, res) => {
 /**
  * Docker
  */
-app.get('/api/systeminformation/dockerContainers', (req, res) => {
+app.get(baseUri + '/dockerContainers', (req, res) => {
     si.dockerContainers(true, (data) => {
         res.send(data);
     });
 });
-app.get('/api/systeminformation/dockerAll', (req, res) => {
+app.get(baseUri + '/dockerAll', (req, res) => {
     si.dockerAll(true, (data) => {
         res.send(data);
     });
@@ -400,12 +344,12 @@ app.get('/api/systeminformation/dockerAll', (req, res) => {
 /**
  * "Get All at once"
  */
-app.get('/api/systeminformation/getStaticData', (req, res) => {
+app.get(baseUri + '/getStaticData', (req, res) => {
     si.getStaticData((data) => {
         res.send(data);
     });
 });
-app.get('/api/systeminformation/getDynamicData', (req, res) => {
+app.get(baseUri + '/getDynamicData', (req, res) => {
     si.getDynamicData((data) => {
         res.send(data);
     });
@@ -415,5 +359,7 @@ app.get('/api/systeminformation/getDynamicData', (req, res) => {
  * Start the server!
  */
 app.listen(port, () => console.log('Ready'));
+console.log(`Preparing http://localhost:${port}${baseUri}`);
 
-console.log(`Preparing http://localhost:${port}/api/systeminformation`);
+// export app for test
+module.exports = app;
