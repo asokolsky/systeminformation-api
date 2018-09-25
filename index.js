@@ -1,20 +1,15 @@
 'use strict';
-
-const express = require('express');
-const app = express();
-const si = require('systeminformation');
 const minimist = require('minimist');
 const pjson = require('./package.json');
-const baseUri = '/api/systeminformation';
-
 /**
  *  Parse the command line
  */
 const args = minimist(process.argv.slice(2), {
     alias: {
         h: 'help',
+        p: 'port',
         v: 'version',
-        p: 'port'
+        z: 'zip'
     },
     default: {
         port: 3000
@@ -25,12 +20,22 @@ const port = args.port;
 if(args.help) {
     console.log('Command line spec: [{-p|--port}:<portnumber>] [-h|--help] [-v|--version] ');
     process.exit(0);
-} else if(args.version) {
+}
+if(args.version) {
     console.log(pjson.name);
     console.log(pjson.description);
     console.log('Version', pjson.version);
     process.exit(0);
 }
+
+const compression = require('compression')
+const express = require('express');
+const app = express();
+if(args.zip) {
+    app.use(compression);
+}
+const si = require('systeminformation');
+const baseUri = '/api/systeminformation';
 
 /**
  * General
@@ -40,7 +45,7 @@ app.get(baseUri, (req, res) => {
 });
 
 app.get(baseUri + '/time', (req, res) => {
-    res.send(si.time());
+    res.json(si.time());
 });
 
 /**
@@ -48,7 +53,10 @@ app.get(baseUri + '/time', (req, res) => {
  */
 app.get(baseUri + '/system', (req, res) => {
     si.system((data) => {
-        res.send(data);
+        // res.json is the same as res.send BUT
+        // "also uses the json replacer and json spaces application settings, so you can format JSON with more options"
+        // I do not use it to improve performance
+        res.json(data);            
     });
 });
 
