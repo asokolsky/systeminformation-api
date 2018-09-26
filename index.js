@@ -27,7 +27,9 @@ if(args.version) {
     console.log('Version', pjson.version);
     process.exit(0);
 }
-
+/**
+ * Start preparing the web service
+ */
 const compression = require('compression')
 const express = require('express');
 const app = express();

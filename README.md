@@ -43,14 +43,14 @@ node index.js [{-p|--port}:<portnumber>] [-z|--zip] [-h|--help] [-v|--version]
 ```
 
 - {-p|--port}:```<port>``` - specifies port on which the service will listen for incoming HTTP connections
-- -z|--zip - will force express to use gzip encoding
+- -z|--zip - will force express to use gzip encoding - experimental, not for production
 - -h|--help - display command line spec
 - -v|--version - show package version
 
 
 ## REST APIs Supported
 
-Only GET method is supported.   
+Only HTTP GET is supported.   
 The URIs start with ```/api/systeminformation``` followed by:
 
 - empty string - returns systeminformation package version
