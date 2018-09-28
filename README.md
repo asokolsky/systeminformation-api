@@ -93,6 +93,18 @@ For a full description of the underlying functionality see the [systeminformatio
 ## Deploy
 Here are the [Best Practices](https://expressjs.com/en/advanced/best-practice-performance.html).
 
+## Debugging
+The package relies on (almost standard) [debug](https://www.npmjs.com/package/debug) package.  Command line to enable this app trace on Windows (powershell, default in vscode):
+```
+$env:DEBUG='siapi';node .\index.js
+```
+
+Try this to learn more about express:
+```
+$env:DEBUG='*';node .\index.js
+```
+
+
 # Credits
 [systeminformation](https://www.npmjs.com/package/systeminformation)
  by [Sebastian Hildebrandt](https://github.com/sebhildebrandt)
@@ -104,10 +116,6 @@ If you have an opinion or ideas on the below list - please do tell.
 ## Logging
 Decide on the logging facility to use: https://strongloop.com/strongblog/compare-node-js-logging-winston-bunyan/
 
-
-## Adopt debug facility
-Use npm debug package instead of console
-
 ## Package it as a Service
 https://github.com/coreybutler/node-windows
 
@@ -117,6 +125,9 @@ https://github.com/tallesl/qckwinsvc
 https://nodesource.com/blog/8-protips-to-start-killing-it-when-dockerizing-node-js
 
 # DONE
+## Adopt debug facility
+Use debug package instead of console.
+
 ## Publish it in npm
 DONE: https://www.npmjs.com/package/systeminformation-api
 

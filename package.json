@@ -1,15 +1,16 @@
 {
   "name": "systeminformation-api",
   "description": "Expose systeminformation as REST APIs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "index.js",
   "author": "Alex Sokolsky <asokolsky@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "compression": "^1.7.3",
+    "debug": "^4.0.1",
     "express": "^4.16.3",
     "minimist": "^1.2.0",
-    "systeminformation": "^3.45.5"
+    "systeminformation": "^3.45.6"
   },
   "devDependencies": {
     "chai": "^4.1.2",

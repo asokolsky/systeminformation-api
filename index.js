@@ -1,6 +1,8 @@
 'use strict';
 const minimist = require('minimist');
 const pjson = require('./package.json');
+const debug = require('debug')('siapi')
+
 /**
  *  Parse the command line
  */
@@ -27,6 +29,7 @@ if(args.version) {
     console.log('Version', pjson.version);
     process.exit(0);
 }
+debug(args);
 /**
  * Start preparing the web service
  */
@@ -368,7 +371,14 @@ app.get(baseUri + '/getDynamicData', (req, res) => {
 /**
  * Start the server!
  */
-app.listen(port, () => console.log('Ready'));
+app.listen(port, () => { 
+    console.log('Ready')
+})
+.on('error', function (e) { 
+    if (e.code == 'EADDRINUSE') { 
+      console.log('Port and/or address in use. Exiting...');
+    }
+});
 console.log(`Preparing http://localhost:${port}${baseUri}`);
 
 // export app for test
