@@ -2,7 +2,7 @@ const chai = require('chai');
 const should = chai.should();
 const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
-const app = require('../index');
+const app = require('../dist/index');
 
 const baseUri = '/api/systeminformation';
 

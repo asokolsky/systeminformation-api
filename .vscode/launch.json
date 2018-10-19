@@ -8,13 +8,13 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}\\index.js"
+            "program": "${workspaceFolder}\\dist\\index.js"
         },
         {
             "type": "node",
             "request": "launch",
             "name": "Launch with zip encoding",
-            "program": "${workspaceFolder}\\index.js",
+            "program": "${workspaceFolder}\\dist\\index.js",
             "args": [
                 "--zip"
             ]

@@ -1,5 +1,5 @@
 # System Information API
-This is a thin wrapper around [systeminformation](https://www.npmjs.com/package/systeminformation) to expose it as a REST API.
+This is a thin wrapper around [systeminformation](https://www.npmjs.com/package/systeminformation) to expose it as a [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) API.  There is also a [gRPC](https://grpc.io) server and a sample client
 
 # Dependencies
 You have to have [node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) setup. Uses [express](http://expressjs.com) to create minimal web service and [minimist](https://github.com/substack/minimist) to process command line argument.  For testing I rely on [mocha](https://mochajs.org)/[chai](https://www.chaijs.com)/[chai-http](https://github.com/chaijs/chai-http).
@@ -14,24 +14,23 @@ Clone or download it from git hub:
 
 ```git clone https://github.com/asokolsky/systeminformation-api.git```
 
-or just use npm to download and install it:
-
-```npm i systeminformation-api```
-
 ## Build
 Run in the shell in the directory where you cloned systeminformation-api:
 
-```npm install```
+```
+npm install
+npm run build
+```
 
 ## Test
 in the shell:
 
-```node test```
+```npm run test```
 
 ## Run
 and then in the shell
 
-```node index.js```
+```npm run start```
 
 Finally, point your browser
 http://localhost:3000/api/systeminformation/cpu
@@ -39,7 +38,7 @@ http://localhost:3000/api/systeminformation/cpu
 ## Command Line
 
 ```
-node index.js [{-p|--port}:<portnumber>] [-z|--zip] [-h|--help] [-v|--version]
+node ./dist/index.js [{-p|--port}:<portnumber>] [-z|--zip] [-h|--help] [-v|--version]
 ```
 
 - {-p|--port}:```<port>``` - specifies port on which the service will listen for incoming HTTP connections
@@ -104,6 +103,20 @@ Try this to learn more about express:
 $env:DEBUG='*';node .\index.js
 ```
 
+## gRPC
+
+To start the server:
+```
+node ./dist/grpc-server.js
+```
+
+To start the sample client:
+```
+node ./dist/grpc-client.js
+```
+### gRPC APIs Supported
+The gRPC interface is defined in ```systeminformation.proto```
+
 
 # Credits
 [systeminformation](https://www.npmjs.com/package/systeminformation)
@@ -125,6 +138,10 @@ https://github.com/tallesl/qckwinsvc
 https://nodesource.com/blog/8-protips-to-start-killing-it-when-dockerizing-node-js
 
 # DONE
+
+## TypeScript
+The service is now implemented in TypeScript.
+
 ## Adopt debug facility
 Use debug package instead of console.
 

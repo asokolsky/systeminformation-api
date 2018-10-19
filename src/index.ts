@@ -1,7 +1,10 @@
 'use strict';
-const minimist = require('minimist');
-const pjson = require('./package.json');
-const debug = require('debug')('siapi')
+/**
+ * A service exposing systeminformation as REST APIs
+ */
+import minimist = require('minimist');
+const pjson = require('../package.json');
+const debug = require('debug')('siapi');
 
 /**
  *  Parse the command line
@@ -33,14 +36,16 @@ debug(args);
 /**
  * Start preparing the web service
  */
-const compression = require('compression')
-const express = require('express');
+import * as express from "express";
+import * as compression from "compression";
 const app = express();
 if(args.zip) {
     app.use(compression);
 }
-const si = require('systeminformation');
+import * as si from "systeminformation";
+//const si = require('systeminformation');
 const baseUri = '/api/systeminformation';
+const baseNodeUri = '/api/node';
 
 /**
  * General
@@ -86,6 +91,7 @@ app.get(baseUri + '/cpu', (req, res) => {
     });
 });
 
+/* TypeScript
 app.get(baseUri + '/cpu/:key', (req, res) => {
     si.cpu((data) => {
         const strKey = req.params.key;
@@ -96,7 +102,7 @@ app.get(baseUri + '/cpu/:key', (req, res) => {
             res.status(404).send(`CPU key '${strKey}' not found`);
         }
     });
-});
+});*/
 
 app.get(baseUri + '/cpuFlags', (req, res) => {
     si.cpuFlags((data) => {
@@ -115,7 +121,6 @@ app.get(baseUri + '/cpuCurrentspeed', (req, res) => {
         res.send(data);
     });
 });
-
 app.get(baseUri + '/cpuCurrentspeed/:id', (req, res) => {
     si.cpuCurrentspeed((data) => {
         const cpuID = req.params.id;
@@ -150,7 +155,7 @@ app.get(baseUri + '/mem', (req, res) => {
     });
 });
 
-app.get(baseUri + '/mem/:key', (req, res) => {
+/*app.get(baseUri + '/mem/:key', (req, res) => {
     si.mem((data) => {
         const strKey = req.params.key;
         const val = data[strKey];
@@ -160,7 +165,7 @@ app.get(baseUri + '/mem/:key', (req, res) => {
             res.status(404).send(`Mem key '${strKey}' not found`);
         }
     });
-});
+});*/
 
 app.get(baseUri + '/memLayout', (req, res) => {
     si.memLayout((data) => {
@@ -218,7 +223,8 @@ app.get(baseUri + '/osInfo', (req, res) => {
         res.send(data);
     });
 });
-app.get(baseUri + '/osInfo/:key', (req, res) => {
+
+/*app.get(baseUri + '/osInfo/:key', (req, res) => {
     si.osInfo((data) => {
         const strKey = req.params.key;
         const val = data[strKey];
@@ -228,14 +234,15 @@ app.get(baseUri + '/osInfo/:key', (req, res) => {
             res.status(404).send(`osInfo key '${strKey}' not found`);
         }
     });
-});
+});*/
 
 app.get(baseUri + '/versions', (req, res) => {
     si.versions((data) => {
         res.send(data);
     });
 });
-app.get(baseUri + '/versions/:key', (req, res) => {
+
+/*app.get(baseUri + '/versions/:key', (req, res) => {
     si.versions((data) => {
         const strKey = req.params.key;
         const val = data[strKey];
@@ -245,7 +252,7 @@ app.get(baseUri + '/versions/:key', (req, res) => {
             res.status(404).send(`versions key '${strKey}' not found`);
         }
     });
-});
+});*/
 
 app.get(baseUri + '/shell', (req, res) => {
     si.shell((data) => {
@@ -349,7 +356,7 @@ app.get(baseUri + '/dockerContainers', (req, res) => {
     });
 });
 app.get(baseUri + '/dockerAll', (req, res) => {
-    si.dockerAll(true, (data) => {
+    si.dockerAll(/*true,*/ (data) => {
         res.send(data);
     });
 });
@@ -363,10 +370,27 @@ app.get(baseUri + '/getStaticData', (req, res) => {
     });
 });
 app.get(baseUri + '/getDynamicData', (req, res) => {
-    si.getDynamicData((data) => {
+    si.getDynamicData('', '', (data) => {
         res.send(data);
     });
 });
+
+/**
+ * Node APIs
+ */
+const { performance } = require('perf_hooks');
+app.get(baseNodeUri + '/performance/now', (req, res) => {
+    res.send(performance.now().toString());
+});
+
+app.get(baseNodeUri + '/process/memoryUsage', (req, res) => {
+    res.send(process.memoryUsage());
+});
+
+app.get(baseNodeUri + '/process/versions', (req, res) => {
+    res.send(process.versions);
+});
+
 
 /**
  * Start the server!
@@ -374,10 +398,10 @@ app.get(baseUri + '/getDynamicData', (req, res) => {
 app.listen(port, () => { 
     console.log('Ready')
 })
-.on('error', function (e) { 
-    if (e.code == 'EADDRINUSE') { 
-      console.log('Port and/or address in use. Exiting...');
-    }
+.on('error', (e) => { 
+    console.log(`Failed to start service: ${e.message}`);
+    //if (e.code == 'EADDRINUSE') { 
+    //}
 });
 console.log(`Preparing http://localhost:${port}${baseUri}`);
 

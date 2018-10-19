@@ -1,0 +1,32 @@
+//
+//
+//
+syntax = "proto3";
+//option java_package = "ex.grpc";
+//option objc_class_prefix = "HSW";
+package systeminformation;
+//
+// The service definition.
+//
+service SystemInformation {
+  // 
+  rpc getStaticData (Request) returns (StaticData) {}
+  // 
+  rpc getDynamicData (Request) returns (DynamicData) {}
+}
+message Request {
+  string body = 1;
+}
+//
+//
+//
+message StaticData {
+  string body = 1;
+}
+//
+//
+//
+message DynamicData {
+  string body = 1;
+}
+
