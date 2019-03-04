@@ -91,7 +91,7 @@ app.get(baseUri + '/cpu', (req, res) => {
     });
 });
 
-/* TypeScript
+/* TypeScript 
 app.get(baseUri + '/cpu/:key', (req, res) => {
     si.cpu((data) => {
         const strKey = req.params.key;
@@ -101,8 +101,7 @@ app.get(baseUri + '/cpu/:key', (req, res) => {
         } else {
             res.status(404).send(`CPU key '${strKey}' not found`);
         }
-    });
-});*/
+    });*/
 
 app.get(baseUri + '/cpuFlags', (req, res) => {
     si.cpuFlags((data) => {
@@ -305,11 +304,11 @@ app.get(baseUri + '/networkInterfaceDefault', (req, res) => {
     });
 });
 
-app.get(baseUri + '/networkStats', (req, res) => {
-    si.networkStats((data) => {
+/*app.get(baseUri + '/networkStats/:iface', (req, res) => {
+    si.networkStats(("eth0", data) => {
         res.send(data);
     });
-});
+});*/
 
 app.get(baseUri + '/networkConnections', (req, res) => {
     si.networkConnections((data) => {
